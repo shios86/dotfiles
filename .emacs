@@ -6,15 +6,16 @@
 ;    by: thor <thor@42.fr>                           +#+  +:+       +#+         ;
 ;                                                  +#+#+#+#+#+   +#+            ;
 ;    Created: 2013/06/18 14:01:14 by thor               #+#    #+#              ;
-;    Updated: 2014/12/10 19:56:14 by ppeltier         ###   ########.fr         ;
+;    Updated: 2017/02/02 16:53:00 by jye              ###   ########.fr        ;
 ;                                                                               ;
 ;*******************************************************************************;
 
-; Load general features files
-					;(load "list.el")
-					;(load "string.el")
-					;(load "comments.el")
-					;(load "header.el")
+					; Load general features files
+(add-to-list 'load-path "~/.emacs.d/site-lisp/")
+(load "list.el")
+(load "string.el")
+(load "comments.el")
+(load "header.el")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/site-lisp/emacs-color-theme-solarized")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/highlight-parentheses.el")
 (require 'highlight-parentheses)
@@ -24,12 +25,13 @@
 (global-set-key (kbd "C-x <down>") 'windmove-down)
 (global-set-key (kbd "C-x <left>") 'windmove-left)
 (global-set-key (kbd "C-x <right>") 'windmove-right)
-;(global-set-key (kbd "C-x <next>") 'next-buffer)
-;(global-set-key (kbd "C-x <prior>") 'previous-buffer)
+(global-set-key (kbd "C-x <next>") 'next-buffer)
+(global-set-key (kbd "C-x <prior>") 'previous-buffer)
 
 (set-language-environment "UTF-8")
 (global-linum-mode 1)
 (global-highlight-parentheses-mode 1)
+(setq-default column-number-mode t)
 (setq-default font-lock-global-modes t)
 (setq-default line-number-mode t)
 (setq-default tab-width 4)
