@@ -118,7 +118,6 @@ class auto_slot:
         _ctime = dt.now(tz(td(hours=2))) + td(days=1)
         self._start = _ctime.date()
         self._end = (_ctime+td(days=14)).date()
-        print(self._start, self._end)
         ## the moment of evalution to pick
         self._min_clock = time(15,00)
         self._max_clock = time(22,00)
@@ -137,30 +136,22 @@ class auto_slot:
                     self._projects.remove(x)
                     continue
 
-                print(ans)
-                print(x)
                 ## sniff csrf token, and duration
                 z = CSRF_sniffer()
                 z.feed(_request("GET", ENTRY_POINT['csrf'].format(project=x),
                                 headers={"Cookie": "_intra_42_session_production={session}".format(session=self._session)}).text)
                 duration = int(z.get_duration())
-                print(z.get_csrf_token(), duration)
 
                 ## check all interval
                 for _eval in ans:
                     _eval_dts = dt.strptime(_eval["start"], '%Y-%m-%dT%H:%M:%S.%f%z')
-                    print("start:", _eval_dts)
                     _eval_s = _eval_dts.time()
                     _eval_dte = (dt.strptime(_eval["end"], '%Y-%m-%dT%H:%M:%S.%f%z') - td(minutes=duration*15))
-                    print("end:", _eval_dte)
                     _eval_e = _eval_dte.time()
                     _eval_ids = _eval["ids"].split(",")
-                    print("ids:", _eval_ids)
                     ## make generator for available time and the evaluation,
                     __iter_avail = [x for x in _next_available(self._min_clock, self._max_clock, self.__busy_time)]
-                    print("__iter_avail:", __iter_avail)
                     __iter_eval = [x for x in _next_available(_eval_s, _eval_e)]
-                    print("__iter_eval:", __iter_eval)
                     for t in __iter_eval:
                         if t in __iter_avail:
                             ## make the interval unavailable
@@ -170,7 +161,6 @@ class auto_slot:
                                 raise ValueError
                             _s = (_eval_dts - td(days=_eval_dts.weekday())).date()
                             _e = (_s + td(days=6))
-                            print(str(_s), str(_e))
                             ## push the request, emulate a little the header, but they can still track you down with sessionID
                             _request("POST", ENTRY_POINT["select_slot"].format(project=x, ids=",".join(_eval_ids[idx_ids:idx_ids+duration-1])),
                                      headers={"Cookie": "_intra_42_session_production={session}".format(session=self._session),
@@ -182,6 +172,7 @@ class auto_slot:
                                               "Referer": ENTRY_POINT['csrf'].format(project=x)
                                      },
                                      data={'start': str(_s), 'end': str(_e), '_method': 'put'})
+                            print("Evaluation found for {x} at {c1}~{c2}", x=x, c1=_eval_dts, c2=_eval_dte)
                             break
                 ## sleep between project request, interval should be random so it doesn't seem like a bot
                 sleep(random()*2)
@@ -198,5 +189,5 @@ class auto_slot:
         self._end = (_ctime+td(days=14)).date()
 
 if __name__ == "__main__":
-    z = auto_slot("753ff96c3268aa4f17f0a75eebc5c12f", ["get_next_line"])
+    z = auto_slot("753ff96c3268aa4f17f0a75eebc5c12f", [""])
     z.loop()
