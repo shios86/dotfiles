@@ -84,26 +84,16 @@ def _request(method:str, target:str,
     ans.raise_for_status()
     return ans
 
-def _next_available(_min:time, _max:time, selected:list = []):
-    _t = _min
-    _time = _min.minute
-    _t = time(_t.hour, 0)
+def _next_available(_min:dt, _max:dt, selected:list = []):
     while _min < _max:
-        _min = time(
-            _t.hour + int(_time / 60),
-            _t.minute + (_time % 60))
         if _min not in selected:
             yield _min
-        _time += 15
+        _min += td(minutes = 15)
 
-def _iter_time(interval:int, iteration:int, _time:time):
-    _int = _time.minute
-    _time = time(_time.hour, 0)
+def _iter_time(interval:int, iteration:int, _time:dt):
     for x in range(0, iteration):
-        yield time(
-            _time.hour + int(_int / 60),
-            _time.minute + (_int % 60))
-        _int += interval
+        yield _time
+        _time += td(minutes=interval)
 
 class auto_slot:
     def __init__(self, session:str, projects:list):
@@ -112,14 +102,14 @@ class auto_slot:
         self._session = session
         self._projects = projects
         ## tick
-        self._tick = 4
+        self._tick = 12
         self._sleep = 60 / self._tick
         ## the range
-        _ctime = dt.now(tz(td(hours=2))) + td(days=1)
+        _ctime = dt.now(tz(td(hours=2))) #+ td(days=1)
         self._start = _ctime.date()
         self._end = (_ctime+td(days=14)).date()
         ## the moment of evalution to pick
-        self._min_clock = time(15,00)
+        self._min_clock = time(16,00)
         self._max_clock = time(22,00)
         ## init variable
         self.__busy_time = []
@@ -141,17 +131,26 @@ class auto_slot:
                 z.feed(_request("GET", ENTRY_POINT['csrf'].format(project=x),
                                 headers={"Cookie": "_intra_42_session_production={session}".format(session=self._session)}).text)
                 duration = int(z.get_duration())
-
+                print(dt.now(), x,
+                    "token:"+str(z.get_csrf_token()),
+                      "duration:"+str(duration),
+                      ans, sep="\n")
                 ## check all interval
                 for _eval in ans:
                     _eval_dts = dt.strptime(_eval["start"], '%Y-%m-%dT%H:%M:%S.%f%z')
                     _eval_s = _eval_dts.time()
                     _eval_dte = (dt.strptime(_eval["end"], '%Y-%m-%dT%H:%M:%S.%f%z') - td(minutes=duration*15))
-                    _eval_e = _eval_dte.time()
                     _eval_ids = _eval["ids"].split(",")
                     ## make generator for available time and the evaluation,
-                    __iter_avail = [x for x in _next_available(self._min_clock, self._max_clock, self.__busy_time)]
-                    __iter_eval = [x for x in _next_available(_eval_s, _eval_e)]
+                    if _eval_s < self._min_clock or _eval_s > self._max_clock:
+                        print("[{ts}]: Skipping slot {s}  {e}".format(ts=dt.now(), s=_eval["start"], e=_eval["end"]))
+                        continue
+                    __iter_avail = [x for x in _next_available(
+                        _eval_dts.replace(hour=self._min_clock.hour, minute=self._min_clock.minute),
+                        _eval_dte.replace(hour=self._max_clock.hour, minute=self._max_clock.minute),
+                        self.__busy_time)]
+                    __iter_eval = [x for x in _next_available(_eval_dts, _eval_dte)]
+                    print(__iter_avail, __iter_eval, sep='\n')
                     for t in __iter_eval:
                         if t in __iter_avail:
                             ## make the interval unavailable
@@ -172,8 +171,10 @@ class auto_slot:
                                               "Referer": ENTRY_POINT['csrf'].format(project=x)
                                      },
                                      data={'start': str(_s), 'end': str(_e), '_method': 'put'})
-                            print("Evaluation found for {x} at {c1}~{c2}", x=x, c1=_eval_dts, c2=_eval_dte)
+                            print("[{ts}]: Evaluation found for {x} at {c1}  {c2}".format(ts=dt.now(), x=x, c1=_eval_dts, c2=_eval_dte))
                             break
+                        ## logging
+                        print("[{ts}]: Project \"{x}\" failed to select slot {s}  {e}".format(x=x, ts=dt.now(), e=_eval["end"], s=_eval["start"]))
                 ## sleep between project request, interval should be random so it doesn't seem like a bot
                 sleep(random()*2)
             ## for each iteration of project sleep.
@@ -189,5 +190,5 @@ class auto_slot:
         self._end = (_ctime+td(days=14)).date()
 
 if __name__ == "__main__":
-    z = auto_slot("753ff96c3268aa4f17f0a75eebc5c12f", [""])
+    z = auto_slot("22ae4e49f291d6b598c59df9205d87f4", ["little-penguin-1"])
     z.loop()
