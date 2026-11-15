@@ -1,0 +1,8 @@
+// Manage screen out eDP-1 (Latop)
+
+output "eDP-1" {
+    mode "2256x1504@59.999"
+    scale 1.1
+    variable-refresh-rate
+    focus-at-startup
+}

@@ -1,0 +1,11 @@
+window-rule {
+    match app-id="org.mozilla.firefox"
+    open-maximized true
+    opacity 1.0
+}
+
+window-rule {
+    match app-id="foot"
+    open-maximized true
+    opacity 0.90
+}

@@ -1,0 +1,5 @@
+## don't overwrite content
+## just add the command line
+[default_session]
+command = "/usr/bin/noctalia-greeter-session"
+
