@@ -91,11 +91,11 @@ connection_notifications = false
 
 [brightness]
 enable_ddcutil = false
-enable_scheduled_brightness = false
+enable_scheduled_brightness = true
 ignore_mmids = []
 minimum_brightness = 0.0
-scheduled_day_brightness = 1.0
-scheduled_night_brightness = 0.5
+scheduled_day_brightness = 0.25
+scheduled_night_brightness = 0.049999997019767761
 sync_all_monitors = false
 
 [calendar]
@@ -152,11 +152,159 @@ width = 700
 [desktop_widgets]
 enabled = true
 schema_version = 2
+widget_order = [
+    "desktop-widget-0000000000000001",
+    "desktop-widget-0000000000000002",
+    "desktop-widget-0000000000000004",
+    "desktop-widget-0000000000000005",
+    "desktop-widget-0000000000000006",
+    "desktop-widget-0000000000000007",
+    "desktop-widget-000000000000000a",
+    "desktop-widget-000000000000000b"
+]
 
     [desktop_widgets.grid]
     cell_size = 16
     major_interval = 4
     visible = true
+
+    [desktop_widgets.widget.desktop-widget-0000000000000001]
+    box_height = 240.0
+    box_width = 224.0
+    cx = 1822.0
+    cy = 202.0
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "clock"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000001.settings]
+        background = false
+        clock_style = "analog"
+        show_seconds = true
+
+    [desktop_widgets.widget.desktop-widget-0000000000000002]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 1815.5
+    cy = 536.5
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "calendar"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000002.settings]
+        background = false
+        show_events = false
+
+    [desktop_widgets.widget.desktop-widget-0000000000000004]
+    box_height = 256.0
+    box_width = 368.0
+    cx = 1801.5
+    cy = 1099.5
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "weather"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000004.settings]
+        background = false
+        show_forecast = true
+
+    [desktop_widgets.widget.desktop-widget-0000000000000005]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 1025.5
+    cy = 683.5
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "fancy_audio_visualizer"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000005.settings]
+        background = false
+
+    [desktop_widgets.widget.desktop-widget-0000000000000006]
+    box_height = 144.0
+    box_width = 304.0
+    cx = 1815.5
+    cy = 859.5
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "audio_visualizer"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000006.settings]
+        background = false
+        bands = 96
+        show_when_idle = true
+
+    [desktop_widgets.widget.desktop-widget-0000000000000007]
+    box_height = 128.0
+    box_width = 256.0
+    cx = 225.5
+    cy = 227.5
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "sysmon"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000007.settings]
+        background = false
+        display = "graph"
+        shadow = true
+        stat = "cpu_usage"
+        stat2 = "cpu_temp"
+
+    [desktop_widgets.widget.desktop-widget-000000000000000a]
+    box_height = 128.0
+    box_width = 256.0
+    cx = 225.5
+    cy = 379.5
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "sysmon"
+
+        [desktop_widgets.widget.desktop-widget-000000000000000a.settings]
+        background = false
+        display = "graph"
+        shadow = true
+        stat = "ram_pct"
+        stat2 = ""
+
+    [desktop_widgets.widget.desktop-widget-000000000000000b]
+    box_height = 128.0
+    box_width = 256.0
+    cx = 225.5
+    cy = 533.5
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "sysmon"
+
+        [desktop_widgets.widget.desktop-widget-000000000000000b.settings]
+        background = false
+        display = "graph"
+        shadow = true
+        stat = "net_rx"
+        stat2 = "net_tx"
 
 [dock]
 active_monitor_only = false
@@ -274,8 +422,9 @@ pre_action_fade_seconds = 2.0
     action = "screen_off"
     command = ""
     enabled = true
-    locked_timeout = 60
-    timeout = 0
+    locked_timeout = 60.0
+    resume_command = ""
+    timeout = 0.0
 
 [keybinds]
 cancel = [ "Escape" ]
@@ -318,28 +467,35 @@ transition_duration = 1500.0
 wallpaper = ""
 
 [lockscreen_widgets]
-enabled = false
+enabled = true
 schema_version = 2
-widget_order = [ "lockscreen-login-box@eDP-1" ]
+widget_order = [
+    "lockscreen-login-box@eDP-1",
+    "lockscreen-widget-0000000000000001",
+    "lockscreen-widget-0000000000000002",
+    "lockscreen-widget-0000000000000003",
+    "lockscreen-widget-0000000000000004",
+    "lockscreen-login-box@DP-3"
+]
 
     [lockscreen_widgets.grid]
     cell_size = 16
     major_interval = 4
     visible = true
 
-    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-3"]
     box_height = 196.0
     box_width = 810.0
-    cx = 1025.5
-    cy = 1118.9500732421875
+    cx = 1280.0
+    cy = 1258.0
     enabled = true
-    output = "eDP-1"
-    placement_height = 1367.0
-    placement_width = 2051.0
+    output = "DP-3"
+    placement_height = 1440.0
+    placement_width = 2560.0
     rotation = 0.0
     type = "login_box"
 
-        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-3".settings]
         background_color = "surface_container"
         background_opacity = 0.88
         background_radius = 12.0
@@ -357,9 +513,103 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
         show_unlock_hint = true
         show_weather = true
 
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 1025.5
+    cy = 683.5
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "compact"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_media_controls = true
+        show_password_reveal = true
+        show_session_buttons = true
+        show_unlock_hint = false
+        show_weather = true
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+    box_height = 192.0
+    box_width = 288.0
+    cx = 233.5
+    cy = 347.5
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "sysmon"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000001.settings]
+        stat = "cpu_usage"
+        stat2 = "cpu_temp"
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
+    box_height = 208.0
+    box_width = 256.0
+    cx = 232.0
+    cy = 582.0
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "weather"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000002.settings]
+        show_forecast = true
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000003]
+    box_height = 208.0
+    box_width = 384.0
+    cx = 1025.5
+    cy = 387.5
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000003.settings]
+        clock_style = "digital"
+        format = "{:%T}"
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000004]
+    box_height = 192.0
+    box_width = 384.0
+    cx = 1057.5
+    cy = 1131.5
+    enabled = true
+    output = "eDP-1"
+    placement_height = 1367.0
+    placement_width = 2051.0
+    rotation = 0.0
+    type = "media_player"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000004.settings]
+        album_art_background = true
+        hide_when_no_media = true
+        layout = "horizontal"
+
 [nightlight]
-enabled = false
-force = false
+enabled = true
+force = true
 temperature_day = 6500
 temperature_night = 4000
 
@@ -426,7 +676,7 @@ scale = 1.0
 [plugin_settings]
 
 [plugins]
-auto_update = "all"
+auto_update = "official"
 enabled = []
 
     [[plugins.source]]
@@ -714,7 +964,7 @@ shell_mode = "follow"
 source = "wallpaper"
 sync_color_scheme = true
 terminal_colors = "palette"
-wallpaper_scheme = "m3-content"
+wallpaper_scheme = "vibrant"
 
     [theme.templates]
     builtin_ids = [ "btop", "foot", "gtk3", "gtk4", "niri" ]
@@ -746,7 +996,7 @@ transition_on_startup = false
 [weather]
 effects = true
 enabled = true
-refresh_minutes = 30
+refresh_minutes = 60
 unit = "metric"
 
 [widget.active_window]
@@ -755,6 +1005,10 @@ max_length = 260.0
 min_length = 80.0
 title_scroll = "none"
 type = "active_window"
+
+[widget.clock]
+format = "{:%c}"
+type = "clock"
 
 [widget.cpu]
 stat = "cpu_usage"
