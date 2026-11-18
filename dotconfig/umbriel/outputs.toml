@@ -1,0 +1,15 @@
+# ==============================================================================
+# Outputs
+# Outputs are machine-specific. Run `umbriel outputs` to find names and modes.
+# https://docs.noctalia.dev/umbriel/outputs/
+#
+[output.eDP-1]
+mode = "2256x11504@59.999"
+position = [0, 0]
+scale = 1
+# vrr = "fullscreen"
+# hdr = "auto"
+# sdr_transfer = "gamma22" # Or "srgb" for piecewise SDR decoding in HDR.
+# color_profile = "edid" # Or a factory ICC path; with sdr_gamut = "srgb" a characterized panel describes itself to tagged clients.
+# sdr_gamut = "srgb" # Map untagged SDR into the panel gamut; "native" stages no mapping.
+

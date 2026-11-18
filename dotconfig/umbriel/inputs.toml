@@ -1,0 +1,37 @@
+# ==============================================================================
+# Input
+# Enable NumLock for the first physical keyboard; later devices inherit current locks.
+# https://docs.noctalia.dev/umbriel/input/
+#
+# [input]
+#
+[input.keyboard]
+numlock_toggle = false
+
+# Focus can follow the pointer across tiled, floating, and pinned windows.
+#
+# [input.focus]
+# follows_mouse = "sloppy" # "off", "sloppy", or "always"; always also refocuses after layout and workspace changes.
+# hover_raises = false # Hover focuses only; clicks and keybinds raise.
+
+# Confine touch input to one display.
+#
+# [input.touch]
+# enabled = true
+# map_to_output = "eDP-1"
+
+[input.touchpad]
+enabled = true
+tap = false
+# tap_and_drag = false
+# drag_lock = "sticky"
+natural_scroll = true
+left_handed = false
+# accel_profile = "adaptive"
+# sensitivity = 0.5
+# scroll_factor = 1.5
+# disable_while_typing = true
+# disable_on_external_mouse = true
+scroll_method = "two_finger"
+# click_method = "clickfinger"
+# tap_button_map = "left_middle_right"
