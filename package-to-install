@@ -1,7 +1,5 @@
+
 btop
-noctalia-greeter
-noctalia
-niri
 oo7-cli
 oo7-daemon
 oo7-portal
@@ -10,7 +8,15 @@ playerctl
 libmpdclient
 pango
 xdg-desktop-portal-kde
-xdg-desktop-portal-gnome
 
-#sway
+## NOCTALIA
+noctalia-greeter
+noctalia
+xdg-dekstop-portal-umbriel-nightly # remove nightly when stable
+umbriel-nightly #remove nightly when stable
+luciole-nightly #remove nightly when stable
+
+# OPTIONAL
+# sway
+# niri
 
